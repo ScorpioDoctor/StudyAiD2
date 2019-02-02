@@ -20,4 +20,4 @@ class CategoryListViewSet(mixins.ListModelMixin,
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     filter_backends = (DjangoFilterBackend, )
-    filter_fields = ('category_type',)
+    filter_fields = ('category_type', 'name',)
