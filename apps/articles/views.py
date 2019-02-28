@@ -18,7 +18,7 @@ class ArticleListPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class ArticleListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class ArticleListViewSet(mixins.ListModelMixin,mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     文章列表页, 分页， 搜索， 过滤， 排序
     """
