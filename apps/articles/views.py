@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, viewsets, filters
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.pagination import PageNumberPagination
 
 from .filters import ArticleFilter
@@ -25,6 +26,7 @@ class ArticleListViewSet(mixins.ListModelMixin,mixins.RetrieveModelMixin, viewse
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     pagination_class = ArticleListPagination
+    # authentication_classes = (TokenAuthentication, )
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_class = ArticleFilter
     search_fields = ('title', 'brief', 'content')

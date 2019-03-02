@@ -32,6 +32,10 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'users.UserProfile'
 
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'corsheaders',
+    'rest_framework.authtoken',
     'users.apps.UsersConfig',
     'taxonomies.apps.TaxonomiesConfig',
     'algorithms.apps.AlgorithmsConfig',
@@ -67,7 +72,6 @@ MIDDLEWARE = [
 
 # 服务端允许跨域
 CORS_ORIGIN_ALLOW_ALL = True
-
 
 ROOT_URLCONF = 'StudyAiD2.urls'
 
@@ -91,7 +95,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StudyAiD2.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -101,7 +104,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -121,7 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -135,7 +136,6 @@ USE_L10N = True
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
@@ -144,3 +144,19 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+
+    )
+}
+
+# 手机号码正则表达式
+REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
+
+# 云片网设置
+APIKEY = "qqqqqqqqqqqqqqqqqqqqqqq"
