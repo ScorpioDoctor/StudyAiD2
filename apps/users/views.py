@@ -11,7 +11,7 @@ from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handl
 from StudyAiD2.settings import APIKEY
 from .models import VerifyCode
 from utils.yunpian import YunPian
-from .serializers import SmsSerializer, UserRegSerializer
+from .serializers import SmsSerializer, UserRegSerializer, UserGetSerializer
 
 User = get_user_model()
 
@@ -73,7 +73,7 @@ class SmsCodeViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
             }, status=status.HTTP_201_CREATED)
 
 
-class UserViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class UserRegViewset(mixins.CreateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     用户
     """
@@ -88,8 +88,18 @@ class UserViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
         payload = jwt_payload_handler(user)
         re_dict["token"] = jwt_encode_handler(payload)
         re_dict["username"] = user.username
+        re_dict["userid"] = user.id
         headers = self.get_success_headers(serializer.data)
         return Response(re_dict, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         return serializer.save()
+
+
+class UserGetByNameViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    """
+    获取一个用户
+    """
+    serializer_class = UserGetSerializer
+    queryset = User.objects.all()
+    lookup_field = 'username'

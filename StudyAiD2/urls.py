@@ -33,14 +33,17 @@ router = DefaultRouter()
 
 # 注册分类系统app相关路由
 router.register('categories', taxonomy_views.CategoryListViewSet, base_name='categories')
+router.register('tags', taxonomy_views.TagsViewSet, base_name='tags')
 
 
 # 注册文章app相关的路由
 router.register('articles', article_views.ArticleListViewSet, base_name='articles')
+router.register('creates', article_views.ArticleCreatesViewSet, base_name='creates')
 
 # 注册用户相关路由
 router.register('codes', user_views.SmsCodeViewset, base_name='codes')
-router.register('users', user_views.UserViewset, base_name='users')
+router.register('users', user_views.UserRegViewset, base_name='users')
+router.register('userget', user_views.UserGetByNameViewSet, base_name='userget')
 
 
 urlpatterns = [

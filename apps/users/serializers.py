@@ -75,3 +75,9 @@ class UserRegSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("username", "mobile", "email", "code", "password")
+
+
+class UserGetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("username", "mobile", "email", "id")

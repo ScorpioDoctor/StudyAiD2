@@ -9,3 +9,12 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = "__all__"
+
+
+class ArticleCreatesSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+    class Meta:
+        model = Article
+        fields = ('category', 'tags', 'user', 'title', 'brief', 'content')
